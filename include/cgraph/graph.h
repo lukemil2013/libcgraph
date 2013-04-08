@@ -12,10 +12,29 @@
 extern "C" {
 #endif
 
+    // We'll store data in the vertex structure.
     struct vertex{
         void * data;
     };
-
+    
+    // Relate two vertices together.
+    struct edge{
+        vertex * u;
+        vertex * v;
+        enum type { UtoV, VtoU, BOTH } direction;
+    };
+    
+    // Join vertices and edges as lists in a graph.
+    struct graph{
+        vertex * V;
+        edge * E;
+        int * magE;
+        int * magV;
+    };
+    
+    int * createAdjMatrix(graph & g);
+    double * createAdjMatrix(graph & g);
+    List * createAdjList(graph & g);
 
 #ifdef	__cplusplus
 }
