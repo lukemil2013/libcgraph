@@ -13,13 +13,16 @@ extern "C" {
 #endif
 
     struct List{
-        void * previous;
-        void * current;
-        void * next;
+        List * previous;
+        void * data;
+        List * next;
+        static int size = 0;
     };
-
-    void addToList(List & l, void * data);
-    void remFromList(List & l, void * data);
+    
+    enum ListStatus{ SUCCESS, NOTFOUND };
+    int initList(List * l);
+    int addToList(List & l, void * data);
+    int remFromList(List & l, void * data);
     int length(List & l);
     void * getData(List & l, int index);
     

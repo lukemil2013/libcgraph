@@ -16,14 +16,12 @@ extern "C" {
     struct vertex{
         void * data;
         bool visit = false;
+        int previsit;
+        int postvisit;
     };
     
-    void visited(vertex v, bool b);
-    bool operator==(vertex & v1, vertex & v2);
-    bool operator>(vertex & v1, vertex & v2);
-    bool operator<(vertex & v1, vertex & v2);
-    bool operator<=(vertex & v1, vertex & v2);
-    bool operator>=(vertex & v1, vertex & v2);
+    void visit(vertex & v, bool b);
+    int Compare(vertex & l, vertex & r);
     
     // Relate two vertices together.
     struct edge{
@@ -39,18 +37,26 @@ extern "C" {
         edge * E;
         int * magE;
         int * magV;
+        int count;
     };
     
+    // Should return an adjacency matrix of integers.
     int * createAdjMatrix(graph & g);
+    // Create an adjacency matrix of doubles.
     double * createAdjMatrix(graph & g);
+    // Create an adjacency list.
     List * createAdjList(graph & g);
-    bool AddVertex(graph & g, vertex v);
-    bool AddEdge(graph & g, edge e);
-    void explore(graph & g, vertex v);
+    // Add a vertex to a graph.
+    int AddVertex(graph & g, vertex & v);
+    // Add an edge to a graph. Must form the edge first.
+    int AddEdge(graph & g, edge & e);
+    // Explore a graph.
+    void explore(graph & g, vertex & v);
     void BreadthFirstSearch(graph & g, vertex & origin);
     void DepthFirstSearch(graph & g, vertex & origin);
     void Dijkstra(graph & g, vertex & origin);
     void BellmanFord(graph & g, vertex & origin);
+    // Partition the graph.
     graph * Partition(graph & g);
     
 

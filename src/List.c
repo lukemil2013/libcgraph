@@ -1,17 +1,29 @@
 #include <List.h>
 #include <stdlib.h>
 
+int initList(List * l){
+    l = malloc(sizeof(List));
+    l->data = NULL;
+    l->next = NULL;
+    l->previous = NULL;
+    l->size++;
+}
+
 int addToList(List & l, void * data){
     List * current = l;
     List * newList;
+    if(l.data == NULL){
+        l.data = data;
+    }else{
+        newList->data = data;
     
-    newList->data = data;
+        while(current.next != NULL){
+                current = current.next;
+        }
     
-    while(current.next != NULL){
-        current = current.next;
+        current.next = newList;
     }
     
-    current.next = newList;
     return SUCCESS;
 };
 

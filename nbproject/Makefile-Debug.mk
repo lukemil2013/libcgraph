@@ -34,7 +34,8 @@ include Makefile
 OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
-OBJECTFILES=
+OBJECTFILES= \
+	${OBJECTDIR}/src/graph.o
 
 # Test Directory
 TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
@@ -67,6 +68,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibcgraph.${CND_DLIB_EXT}: ${OBJEC
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/liblibcgraph.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
+${OBJECTDIR}/src/graph.o: src/graph.c 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.c) -g -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/graph.o src/graph.c
+
 # Subprojects
 .build-subprojects:
 
@@ -82,6 +88,19 @@ ${TESTDIR}/_ext/1473494506/listtest.o: /home/anthony/NetBeansProjects/libcgraph/
 	${RM} $@.d
 	$(COMPILE.c) -g `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/_ext/1473494506/listtest.o /home/anthony/NetBeansProjects/libcgraph/tests/listtest.c
 
+
+${OBJECTDIR}/src/graph_nomain.o: ${OBJECTDIR}/src/graph.o src/graph.c 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/graph.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.c) -g -fPIC  -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/graph_nomain.o src/graph.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/graph.o ${OBJECTDIR}/src/graph_nomain.o;\
+	fi
 
 # Run Test Targets
 .test-conf:
