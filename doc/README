@@ -1,0 +1,18 @@
+LibCGraph
+
+    We are working on a shared library for graph representation and exploration
+in C. The basic structures are already defined and I think they should work.
+The interpretation of the resulting structures is left to the application developer.
+
+
+Use:
+    In order to create a graph the developer should first define the variables
+that are going to be wrapped in the vertex structure and create the vertices by
+referencing those variables in the data pointer. It is recommended to 
+use the addVertex and addEdge functions to add newly created vertices and edges
+to the graph. The edges need to be defined using references to the vertices in 
+a graph's vertex array after they have all been added. 
+
+The assumption we are making is that if each node is unique and defined in the 
+array, we can compare the address of the vertices rather than the data wrapped 
+in the vertex structure. 
