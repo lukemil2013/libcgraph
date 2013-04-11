@@ -23,9 +23,9 @@ extern "C" {
     int initList(List * l);
     int addToList(List & l, void * data);
     int remFromList(List & l, void * data);
-    int length(List & l);
     void * getData(List & l, int index);
-    
+    void appendToList(List & l, List & r);
+    int findIndex(List & l, void * data);
     
 #ifdef	__cplusplus
 }

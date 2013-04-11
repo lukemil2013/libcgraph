@@ -22,6 +22,7 @@ int addToList(List & l, void * data){
         }
     
         current.next = newList;
+        current->size++;
     }
     
     return SUCCESS;
@@ -36,21 +37,16 @@ int remFromList(List & l, void * data){
     
     if(*current->data != *data && current->next == NULL){
         return NOTFOUND;
+    } else {
+        current->previous->next = current->next;
+        current->size++;
     }
-};
-
-int length(List & l){
-    int i = 1;
-    for(List * current = l; current->next != NULL; current = current->next){
-        i++;
-    }
-    return i;
 };
 
 void * getData(List & l, int index){
     void * data = NULL;
     List * current = l;
-    for(int i = 0; i < length(l); i++){
+    for(int i = 0; i < l.size; i++){
         if(i == index){
             data = current.data;
         }
@@ -59,3 +55,19 @@ void * getData(List & l, int index){
     
     return data;
 };
+
+void appendToList(List & l, List & r){
+    List * currentl = l;
+    while(currentl->next != NULL){
+        currentl = currentl->next;
+    }
+    
+    currentl->next = r;
+    r.previous = currentl;
+}
+
+int findIndex(List & l, void * data){
+    int i = 0;
+    
+    for(i; i < l->size;)
+}

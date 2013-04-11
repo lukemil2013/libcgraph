@@ -18,23 +18,33 @@ List * findEdges(graph & g, vertex * v){
 // Should return an adjacency matrix of integers.
 int * createAdjMatrix(graph & g){
     int matrix[g.magV][g.magV];
+    List * adjList = createAdjList(g);
+    int i = 0, k = 0;
     
     // For each vertex, define its connection to other vertices.
-    for(int i = 0; i < g.magV; i++){
-        
-        for(int k = 0; k < g.magV; k++){
-            if(i==k){
-                matrix[i][k] = 0;
-            }else{
-                
-            }
+    for(List * current_row = adjList; current_row != NULL; current_row = current_row->next){
+        for(List * current_column = ((List *)current_row->data)->next; current_column != NULL; current_column = current_column->next){
+            
         }
     }
 }
 // Create an adjacency matrix of doubles.
 double * createAdjMatrix(graph & g);
 // Create an adjacency list.
-List * createAdjList(graph & g);
+List * createAdjList(graph & g){
+    List * tempList;
+    initList(tempList);
+    
+    for(int i = 0; i < g.magV; i++){
+        List * temp;
+        initList(temp);
+        addToList(temp, g.V[i]);
+        appendToList(temp,findEdges(g,g.V[i]));
+        addToList(tempList, temp);
+    }
+    
+    return tempList;
+}
 // Add a vertex to a graph.
 int AddVertex(graph & g, vertex & v);
 // Add an edge to a graph. Must form the edge first.
