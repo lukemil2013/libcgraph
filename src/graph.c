@@ -15,21 +15,62 @@ List * findEdges(graph & g, vertex * v){
     return edgeList;
 }
 
+int edgeExists(graph & g, vertex * u, vertex * v){
+    for(int i = 0; i < g.magE; i++){
+        if((u == g.E[i].u && v == g.E[i].v) ||(u == g.E[i].v && v == g.E[i].u)){
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
+double edgeExists(graph & g, vertex * u, vertex * v){
+    for(int i = 0; i < g.magE; i++){
+        if((u == g.E[i].u && v == g.E[i].v) || (u == g.E[i].v && v == g.E[i].u)){
+            return g.E[i].dist;
+        }
+    }
+    
+    return 0.0;
+}
+
 // Should return an adjacency matrix of integers.
 int * createAdjMatrix(graph & g){
     int matrix[g.magV][g.magV];
-    List * adjList = createAdjList(g);
     int i = 0, k = 0;
     
     // For each vertex, define its connection to other vertices.
-    for(List * current_row = adjList; current_row != NULL; current_row = current_row->next){
-        for(List * current_column = ((List *)current_row->data)->next; current_column != NULL; current_column = current_column->next){
-            
+    // For each row
+    for(i; i < g.magV; i++){
+        // and each column in the row,
+        for(k; k < g.magV; k++){
+            // if the vertex at the index i is connected to the vertex
+            // at the index k, place 1 in the matrix at (i,k).
+            matrix[i][k] = edgeExists(g, &g.V[i], &g.V[k]);
         }
     }
+    
+    return matrix;
 }
 // Create an adjacency matrix of doubles.
-double * createAdjMatrix(graph & g);
+double * createAdjMatrix(graph & g){
+    double matrix[g.magV][g.magV];
+    int i = 0, k = 0;
+    
+    // For each vertex, define its connection to other vertices.
+    // For each row
+    for(i; i < g.magV; i++){
+        // and each column in the row,
+        for(k; k < g.magV; k++){
+            // if the vertex at the index i is connected to the vertex
+            // at the index k, place 1 in the matrix at (i,k).
+            matrix[i][k] = edgeExists(g, &g.V[i], &g.V[k]);
+        }
+    }
+    
+    return matrix;
+}
 // Create an adjacency list.
 List * createAdjList(graph & g){
     List * tempList;
@@ -45,10 +86,21 @@ List * createAdjList(graph & g){
     
     return tempList;
 }
+
 // Add a vertex to a graph.
-int AddVertex(graph & g, vertex & v);
+int AddVertex(graph & g, vertex & v){
+    g.magV++;
+    g.V = realloc(g.V, g.magV);
+    g.V[g.magV-1] = v;
+}
+
 // Add an edge to a graph. Must form the edge first.
-int AddEdge(graph & g, edge & e);
+int AddEdge(graph & g, edge & e){
+    g.magE++;
+    g.E = realloc(g.E, g.magE);
+    g.E[g.magE -1] = e;
+}
+
 // Explore a graph.
 void explore(graph & g, vertex & v);
 void BreadthFirstSearch(graph & g, vertex & origin);

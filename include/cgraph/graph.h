@@ -27,9 +27,12 @@ extern "C" {
     struct edge{
         vertex * u;
         vertex * v;
-        enum type { UtoV, VtoU, BOTH } direction;
+        enum type { ONE_WAY, TWO_WAY } direction;
         double dist;
     };
+    
+    int edgeExists(graph & g, vertex* u, vertex * v);
+    double edgeExist(graph & g, vertex * u, vertex * v);
     
     // Join vertices and edges as lists in a graph.
     struct graph{

@@ -6,7 +6,6 @@ int initList(List * l){
     l->data = NULL;
     l->next = NULL;
     l->previous = NULL;
-    l->size++;
 }
 
 int addToList(List & l, void * data){
@@ -22,7 +21,6 @@ int addToList(List & l, void * data){
         }
     
         current.next = newList;
-        current->size++;
     }
     
     return SUCCESS;
@@ -39,7 +37,6 @@ int remFromList(List & l, void * data){
         return NOTFOUND;
     } else {
         current->previous->next = current->next;
-        current->size++;
     }
 };
 
@@ -66,8 +63,14 @@ void appendToList(List & l, List & r){
     r.previous = currentl;
 }
 
-int findIndex(List & l, void * data){
-    int i = 0;
+int ListLength(List & l){
+    List * current = l;
+    int i = 1;
     
-    for(i; i < l->size;)
+    while(current->next != NULL){
+        i++;
+        current = current->next;
+    }
+    
+    return i;
 }
